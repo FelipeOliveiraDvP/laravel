@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Api\GroupController;
+use App\Http\Controllers\API\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::group(['prefix' => 'groups', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [GroupController::class, 'index']);
+    Route::get('/{id}', [GroupController::class, 'details']);
+    Route::post('/', [GroupController::class, 'create']);
+    Route::put('/{id}', [GroupController::class, 'update']);
+    Route::delete('/{id}', [GroupController::class, 'delete']);
 });
