@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class PurchaseProduct extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * 
+     * @var string[]
+     */
+    protected $fillable = [
+        'purchase_id',
+        'product_id',
+        'quantity',
+    ];
 }
