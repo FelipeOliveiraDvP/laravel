@@ -105,10 +105,12 @@ export default {
       password: "",
       group_id: 1,
       error: null,
+      processing: false,
     };
   },
   methods: {
     handleSubmit(e) {
+      this.processing = true;
       e.preventDefault();
       if (this.password.length > 0) {
         axios.get("/sanctum/csrf-cookie").then((response) => {
@@ -129,6 +131,9 @@ export default {
             })
             .catch(function (error) {
               console.error(error);
+            })
+            .finally(() => {
+              this.processing = false;
             });
         });
       }

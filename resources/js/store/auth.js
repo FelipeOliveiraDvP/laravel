@@ -34,7 +34,6 @@ export default {
             }
         },
         logout({ commit }) {
-            console.log("Action logout");
             commit("SET_USER", {});
             commit("SET_AUTHENTICATED", false);
 

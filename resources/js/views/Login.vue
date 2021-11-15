@@ -23,6 +23,7 @@
                     required
                     autofocus
                     autocomplete="off"
+                    :disabled="processing"
                   />
                 </div>
               </div>
@@ -41,13 +42,19 @@
                     v-model="auth.password"
                     required
                     autocomplete="off"
+                    :disabled="processing"
                   />
                 </div>
               </div>
 
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button type="button" class="btn btn-primary" @click="login">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="login"
+                    :disabled="processing"
+                  >
                     Entrar
                   </button>
                 </div>

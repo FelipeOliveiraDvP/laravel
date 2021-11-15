@@ -1,5 +1,12 @@
 <template>
-  <div>Welcome {{ user.name }}</div>
+  <b-container>
+    <b-jumbotron
+      header="Dashboard"
+      lead="Somente usuários logados podem visualizar essa página"
+    >
+      <p>Lorem ipsum dolor sit amet</p>
+    </b-jumbotron>
+  </b-container>
 </template>
 
 <script>
