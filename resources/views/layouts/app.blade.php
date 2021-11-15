@@ -11,14 +11,8 @@
 
 <body>
 
-    <script>
-        window.Laravel = {
-            isLoggedin: false
-        }
-    </script>
+    <div id="app"></div>
 
-    <div id="app">
-    </div>
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
 </body>
 

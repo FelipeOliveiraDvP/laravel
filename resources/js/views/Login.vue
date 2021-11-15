@@ -19,7 +19,7 @@
                     id="email"
                     type="email"
                     class="form-control"
-                    v-model="email"
+                    v-model="auth.email"
                     required
                     autofocus
                     autocomplete="off"
@@ -38,7 +38,7 @@
                     id="password"
                     type="password"
                     class="form-control"
-                    v-model="password"
+                    v-model="auth.password"
                     required
                     autocomplete="off"
                   />
@@ -47,11 +47,7 @@
 
               <div class="form-group row mb-0">
                 <div class="col-md-8 offset-md-4">
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    @click="handleSubmit"
-                  >
+                  <button type="button" class="btn btn-primary" @click="login">
                     Entrar
                   </button>
                 </div>
@@ -65,45 +61,39 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
+  name: "login",
   data() {
     return {
-      email: "",
-      password: "",
+      auth: {
+        email: "",
+        password: "",
+      },
       error: null,
+      processing: false,
     };
   },
   methods: {
-    handleSubmit(e) {
-      e.preventDefault();
-      if (this.password.length > 0) {
-        this.$axios.get("/sanctum/csrf-cookie").then((response) => {
-          this.$axios
-            .post("api/login", {
-              email: this.email,
-              password: this.password,
-            })
-            .then((response) => {
-              // console.log(response.data);
-              if (response.data.success) {
-                window.Laravel.isLoggedin = true;
-                this.$router.go("/dashboard");
-              } else {
-                this.error = response.data.message;
-              }
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
+    ...mapActions({
+      signIn: "auth/login",
+    }),
+    async login() {
+      this.processing = true;
+      await axios.get("/sanctum/csrf-cookie");
+      await axios
+        .post("/api/login", this.auth)
+        .then(({ data }) => {
+          this.signIn(data);
+        })
+        .catch(({ response: { data } }) => {
+          alert(data.message);
+        })
+        .finally(() => {
+          this.processing = false;
         });
-      }
     },
-  },
-  beforeRouteEnter(to, from, next) {
-    if (window.Laravel.isLoggedin) {
-      return next("dashboard");
-    }
-    next();
   },
 };
 </script>

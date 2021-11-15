@@ -11,17 +11,14 @@
 
     <nav class="navbar navbar-light bg-light">
       <!-- for logged-in user-->
-      <div class="navbar-nav" v-if="isLoggedIn">
+      <div class="navbar-nav" v-if="authenticated">
         <router-link to="/dashboard" class="nav-item nav-link"
           >Dashboard</router-link
         >
         <router-link to="/groups" class="nav-item nav-link">Grupos</router-link>
-        <a
-          class="nav-item nav-link text-danger"
-          style="cursor: pointer"
-          @click="logout"
-          >Sair</a
-        >
+        <button type="button" class="btn btn-danger" @click="logout">
+          Sair
+        </button>
       </div>
       <!-- for non-logged user-->
       <div class="navbar-nav" v-else>
@@ -30,7 +27,9 @@
         <router-link to="/register" class="nav-item nav-link"
           >Cadastrar</router-link
         >
-        <router-link to="/about" class="nav-item nav-link">Sobre nós</router-link>
+        <router-link to="/about" class="nav-item nav-link"
+          >Sobre nós</router-link
+        >
       </div>
     </nav>
     <br />
@@ -39,36 +38,26 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "App",
-  data() {
-    return {
-      isLoggedIn: false,
-    };
+  computed: {
+    authenticated() {
+      return this.$store.state.auth.authenticated;
+    },
   },
-  created() {
-    if (window.Laravel.isLoggedin) {
-      this.isLoggedIn = true;
-    }
+  watch: {
+    authenticated(newValue, oldValue) {
+      return this.$store.state.auth.authenticated;
+    },
   },
   methods: {
-    logout(e) {
-      console.log("ss");
-      e.preventDefault();
-      this.$axios.get("/sanctum/csrf-cookie").then((response) => {
-        this.$axios
-          .post("/api/logout")
-          .then((response) => {
-            if (response.data.success) {
-              window.location.href = "/";
-            } else {
-              console.log(response);
-            }
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
-      });
+    ...mapActions({
+      signOut: "auth/logout",
+    }),
+    logout() {
+      this.signOut();
     },
   },
 };

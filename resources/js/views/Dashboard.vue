@@ -1,5 +1,5 @@
 <template>
-  <div>Welcome {{ name }}</div>
+  <div>Welcome {{ user.name }}</div>
 </template>
 
 <script>
@@ -7,20 +7,8 @@ export default {
   name: "Dashboard",
   data() {
     return {
-      name: null,
+      user: this.$store.state.auth.user,
     };
-  },
-  created() {
-    if (window.Laravel.user) {
-      this.name = window.Laravel.user.name;
-    }
-  },
-  beforeRouteEnter(to, from, next) {
-    if (!window.Laravel.isLoggedin) {
-      console.log(window.Laravel);
-      window.location.href = "/";
-    }
-    next();
   },
 };
 </script>
