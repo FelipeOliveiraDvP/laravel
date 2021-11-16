@@ -19,9 +19,9 @@ use App\Http\Controllers\API\UserController;
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/groups', [GroupController::class, 'index']);
 
 Route::group(['prefix' => 'groups', 'middleware' => 'auth:sanctum'], function () {
-    Route::get('/', [GroupController::class, 'index']);
     Route::get('/{id}', [GroupController::class, 'details']);
     Route::post('/', [GroupController::class, 'create']);
     Route::put('/{id}', [GroupController::class, 'update']);

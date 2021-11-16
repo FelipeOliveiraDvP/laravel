@@ -30,7 +30,7 @@
           v-if="processing"
           class="text-center p-4 bg-primary text-light rounded"
         >
-          <div class="mb-3">Carregando...</div>
+          <div class="mb-3">Removendo grupo...</div>
         </div>
         <div
           v-else
@@ -79,20 +79,20 @@ export default {
           key: "description",
           label: "Descrição",
         },
-        {
-          key: "created_at",
-          label: "Data da criação",
-          formatter(value, key, item) {
-            return moment(value).format("D/M/Y");
-          },
-        },
-        {
-          key: "updated_at",
-          label: "Data de edição",
-          formatter(value, key, item) {
-            return moment(value).format("D/M/Y");
-          },
-        },
+        // {
+        //   key: "created_at",
+        //   label: "Data da criação",
+        //   formatter(value, key, item) {
+        //     return moment(value).format("D/M/Y");
+        //   },
+        // },
+        // {
+        //   key: "updated_at",
+        //   label: "Data de edição",
+        //   formatter(value, key, item) {
+        //     return moment(value).format("D/M/Y");
+        //   },
+        // },
         {
           key: "actions",
           label: "Ações",
@@ -124,7 +124,7 @@ export default {
     },
     async onOk() {
       await this.deleteGroup(this.selectedGroup.id);
-      
+
       this.showConfirm = false;
       this.selectedGroup = null;
     },

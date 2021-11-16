@@ -4,6 +4,7 @@
       v-model="selected"
       :options="options"
       :disabled="processing"
+      @change="onChange"
     ></b-form-select>
   </div>
 </template>
@@ -11,6 +12,7 @@
 <script>
 export default {
   name: "GroupSelect",
+  props: ["handleChange"],
   data() {
     return {
       selected: null,
@@ -18,16 +20,26 @@ export default {
       options: [],
     };
   },
+  async created() {
+    await this.getGroups();
+  },
   methods: {
+    onChange(value) {
+      this.$emit("change", value);
+    },
     async getGroups() {
       this.processing = false;
 
-      await axios.get("/sanctum/csrf-cookie");
+      // await axios.get("/sanctum/csrf-cookie");
       axios
         .get("/api/groups")
         .then(({ data }) => {
-          console.log(data);
-          this.options = data;
+          const options = data.map((option) => ({
+            value: option.id,
+            text: option.name,
+          }));
+
+          this.options = options;
         })
         .catch(({ response: { data } }) => {
           alert(data.message);
