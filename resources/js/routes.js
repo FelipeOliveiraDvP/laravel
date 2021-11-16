@@ -13,6 +13,10 @@ import Groups from "@/js/components/groups/Groups";
 import GroupCreate from "@/js/components/groups/GroupCreate";
 import GroupDetails from "@/js/components/groups/GroupDetails";
 
+import Users from "@/js/components/users/Users";
+import UserCreate from "@/js/components/users/UserCreate";
+import UserDetails from "@/js/components/users/UserDetails";
+
 export const routes = [
     {
         name: "home",
@@ -62,6 +66,30 @@ export const routes = [
         name: "groupDetails",
         path: "/groups/details/:id",
         component: GroupDetails,
+        meta: {
+            auth: "admin",
+        },
+    },
+    {
+        name: "users",
+        path: "/users",
+        component: Users,
+        meta: {
+            auth: "admin",
+        },
+    },
+    {
+        name: "usersCreate",
+        path: "/users/create",
+        component: UserCreate,
+        meta: {
+            auth: "admin",
+        },
+    },
+    {
+        name: "userDetails",
+        path: "/users/details/:id",
+        component: UserDetails,
         meta: {
             auth: "admin",
         },

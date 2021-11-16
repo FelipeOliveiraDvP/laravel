@@ -27,3 +27,11 @@ Route::group(['prefix' => 'groups', 'middleware' => 'auth:sanctum'], function ()
     Route::put('/{id}', [GroupController::class, 'update']);
     Route::delete('/{id}', [GroupController::class, 'delete']);
 });
+
+Route::group(['prefix' => 'users', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'details']);
+    Route::post('/', [UserController::class, 'create']);
+    Route::put('/{id}', [UserController::class, 'update']);
+    Route::delete('/{id}', [UserController::class, 'delete']);
+});

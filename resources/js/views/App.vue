@@ -12,7 +12,7 @@
         <!-- User logged in -->
         <b-navbar-nav class="ml-auto" v-if="authenticated">
           <router-link to="/dashboard" class="nav-item nav-link">
-            Dashoboard
+            Dashboard
           </router-link>
 
           <b-nav-item-dropdown text="Grupos" right>

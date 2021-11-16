@@ -12,7 +12,7 @@
 <script>
 export default {
   name: "GroupSelect",
-  props: ["handleChange"],
+  props: ["defaultValue"],
   data() {
     return {
       selected: null,
@@ -30,7 +30,6 @@ export default {
     async getGroups() {
       this.processing = false;
 
-      // await axios.get("/sanctum/csrf-cookie");
       axios
         .get("/api/groups")
         .then(({ data }) => {
