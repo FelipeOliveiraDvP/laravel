@@ -34,10 +34,10 @@ class GroupController extends Controller
         return response()->json('Grupo criado com sucesso!', 201);
     }
 
-    public function udpate($id, Request $request)
+    public function update($id, Request $request)
     {
         $group = Group::find($id);
-        $group->udpate($request->all());
+        $group->update($request->all());
 
         return response()->json('Grupo atualizado com sucesso!');
     }
